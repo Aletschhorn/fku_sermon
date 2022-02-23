@@ -1,0 +1,51 @@
+{namespace ff=FKU\FkuSermon\ViewHelpers}
+
+<f:layout name="Default" />
+<f:section name="main">
+
+<h3>&quot;{sermon.title}"</h3>
+<p>Predigt vom <f:format.date format="%e. %B">{sermon.date}</f:format.date><f:if condition="{sermon.serial.title} != 'Diverse'"> aus der Predigtreihe &quot;{sermon.serial.title}&quot;</f:if>, gehalten von {sermon.preacher}.</p>
+
+<p>
+	<f:if condition="{sermon.biblePassage}">
+		Bibeltext: {sermon.biblePassage}<br />
+	</f:if>
+	<f:if condition="{sermon.bibleText}">
+		<f:then>
+			<f:if condition="{sermon.concept}">
+				<f:then>
+					<f:link.action action="show" pageUid="{settings.PidSermons}" arguments="{sermon:sermon}">Bibeltext und Konzept lesen</f:link.action>
+				</f:then>
+				<f:else>
+					<f:link.action action="show" pageUid="{settings.PidSermons}" arguments="{sermon:sermon}">Bibeltext lesen</f:link.action>
+				</f:else>
+			</f:if>
+		</f:then>
+		<f:else>
+			<f:if condition="{sermon.concept}">
+				<f:link.action action="show" pageUid="{settings.PidSermons}" arguments="{sermon:sermon}">Konzept lesen</f:link.action>
+			</f:if>
+		</f:else>
+	</f:if>
+</p>
+
+<f:if condition="{sermon.relatedFiles}">
+	<p class="text-uppercase">
+		<f:for each="{sermon.relatedFiles}" as="file">
+			<a href="{file.originalResource.publicUrl}" target="_blank">
+				<svg class="icon-md" width="32" height="32" fill="currentColor"><use xlink:href="fileadmin/icon/{file.originalResource.originalFile.properties.mime_type->ff:fileIcon()}.svg#glyphicons-basic"/></svg>
+				{file.originalResource.originalFile.properties.extension}
+			</a>
+			<br />
+		</f:for>
+	</p>
+</f:if>
+
+<div class="my-3">
+	<f:link.page pageUid="{settings.PidSermons}">
+    	<svg class="icon-md" width="32" height="32" fill="currentColor"><use xlink:href="fileadmin/icon/glyphicons-basic-224-chevron-right.svg#glyphicons-basic"/></svg>
+        Ältere Predigten ansehen/anhören
+     </f:link.page>
+</div>
+
+</f:section>

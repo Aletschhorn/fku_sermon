@@ -1,0 +1,46 @@
+
+<f:layout name="Default" />
+
+<f:section name="main">
+
+<f:flashMessages as="flashMessages">
+	<f:render partial="Alert" arguments="{flashMessages:flashMessages}" />
+</f:flashMessages>
+
+<f:security.ifHasRole role="Administrator">
+	<f:link.action action="new">
+		<span title="Neue Predigt hinzufügen"><span class="halflings halflings-plus"></span> Predigt hinzufügen</span>
+	</f:link.action>
+	<br clear="all" />
+</f:security.ifHasRole>				
+
+<ul class="pagination">
+	<li><f:link.action action="list">nach Datum</f:link.action></li>
+	<li class="active"><a href="#">nach Predigtthema</a></li>
+</ul>
+
+<table class="table">
+	<tr>
+		<th>Datum</th>
+		<th>Thema</th>
+		<th>Bibelstelle</th>
+		<th>Download</th>
+		<th> </th>
+	</tr>
+
+	<f:groupedFor each="{sermons}" groupBy="serial.title" groupKey="serialTitle" as="sermonGroup">
+		<tr class="info"><td colspan="5">Predigtreihe: {serialTitle}</td></tr>
+
+		<f:render partial="Sermons/Table" arguments="{sermons:sermonGroup,back:back}" />
+
+	</f:groupedFor>
+</table>
+
+<f:security.ifHasRole role="Administrator">
+	<f:link.action action="new">
+		<span title="Neue Predigt hinzufügen"><span class="halflings halflings-plus"></span> Predigt hinzufügen</span>
+	</f:link.action>
+	<br clear="all" />
+</f:security.ifHasRole>				
+
+</f:section>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2014-06-21T15:26:34Z" product-name="fku_sermon">
+		<header/>
+		<body>
+			<trans-unit id="date.description">
+				<source>date</source>
+			</trans-unit>
+			<trans-unit id="title.description">
+				<source>title</source>
+			</trans-unit>
+			<trans-unit id="preacher.description">
+				<source>preacher</source>
+			</trans-unit>
+			<trans-unit id="bible_passage.description">
+				<source>biblePassage</source>
+			</trans-unit>
+			<trans-unit id="bible_text.description">
+				<source>bibleText</source>
+			</trans-unit>
+			<trans-unit id="concept.description">
+				<source>concept</source>
+			</trans-unit>
+			<trans-unit id="related_files.description">
+				<source>relatedFiles</source>
+			</trans-unit>
+			<trans-unit id="serial.description">
+				<source>serial</source>
+			</trans-unit>
+			<trans-unit id="serial.notpublic">
+				<source>notpbulic</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

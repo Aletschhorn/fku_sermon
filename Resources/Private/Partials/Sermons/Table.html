@@ -1,0 +1,63 @@
+{namespace ff=FKU\FkuSermon\ViewHelpers}
+{namespace vhs=FluidTYPO3\Vhs\ViewHelpers}
+
+<f:for each="{sermons}" as="sermon">
+	<f:if condition="{sermon.notpublic}">
+		<f:then>
+			<f:security.ifHasRole role="{settings.usergroupAdmin}">
+				<tr class="table-active">
+					<td><f:format.date format="d.m.Y">{sermon.date}</f:format.date></td>
+					<td><f:link.action action="show" arguments="{sermon:sermon,expression:filter.expression,year:filter.year,sorting:filter.sorting}">{sermon.title}</f:link.action></td>
+					<td>{sermon.biblePassage}</td>
+					<td>
+						<f:if condition="{sermon.relatedFiles}">
+                        	<f:for each="{sermon.relatedFiles}" as="file">
+								<a href="{file.originalResource.publicUrl}" target="_blank">
+									<svg class="icon-md" width="32" height="32" fill="currentColor"><use xlink:href="fileadmin/icon/{file.originalResource.originalFile.properties.mime_type->ff:fileIcon()}.svg#glyphicons-basic"/></svg>
+								</a>&nbsp;
+							</f:for>
+                        </f:if>
+					</td>
+					<td class="text-right">
+						<nobr>
+							<span title="Predigt ist versteckt">
+								<svg class="icon-md" width="32" height="32" fill="currentColor"><use xlink:href="fileadmin/icon/glyphicons-basic-305-no-symbol.svg#glyphicons-basic"/></svg>
+							</span>
+							&nbsp;
+							<f:link.action action="edit" arguments="{sermon:sermon}">
+								<span title="Predigt editieren">
+									<svg class="icon-md" width="32" height="32" fill="currentColor"><use xlink:href="fileadmin/icon/glyphicons-basic-31-pencil.svg#glyphicons-basic"/></svg>
+								</span>
+							</f:link.action>
+						</nobr>
+					</td>
+				</tr>
+			</f:security.ifHasRole>
+		</f:then>
+		<f:else>
+			<tr>
+				<td><f:format.date format="d.m.Y">{sermon.date}</f:format.date></td>
+				<td><f:link.action action="show" arguments="{sermon:sermon,expression:filter.expression,year:filter.year,sorting:filter.sorting}">{sermon.title}</f:link.action></td>
+				<td>{sermon.biblePassage}</td>
+				<td>
+					<f:if condition="{sermon.relatedFiles}">
+						<f:for each="{sermon.relatedFiles}" as="file">
+							<a href="{file.originalResource.publicUrl}" target="_blank">
+								<svg class="icon-md" width="32" height="32" fill="currentColor"><use xlink:href="fileadmin/icon/{file.originalResource.originalFile.properties.mime_type->ff:fileIcon()}.svg#glyphicons-basic"/></svg>
+							</a>&nbsp;
+						</f:for>
+					</f:if>
+				</td>
+				<td class="text-right">
+					<f:security.ifHasRole role="{settings.usergroupAdmin}">
+						<f:link.action action="edit" arguments="{sermon:sermon}">
+							<span title="Predigt editieren">
+								<svg class="icon-md" width="32" height="32" fill="currentColor"><use xlink:href="fileadmin/icon/glyphicons-basic-31-pencil.svg#glyphicons-basic"/></svg>
+							</span>
+						</f:link.action>
+					</f:security.ifHasRole>
+				</td>
+			</tr>
+		</f:else>
+	</f:if>
+</f:for>

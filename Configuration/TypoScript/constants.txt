@@ -1,0 +1,31 @@
+
+plugin.tx_fkusermon {
+	view {
+		# cat=plugin.tx_fkusermon/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:fku_sermon/Resources/Private/Templates/
+		# cat=plugin.tx_fkusermon/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:fku_sermon/Resources/Private/Partials/
+		# cat=plugin.tx_fkusermon/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:fku_sermon/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_fkusermon//a; type=int+; label=Default storage PID
+		storagePid =
+	}
+	settings {
+		# cat=plugin.tx_fkusermon/others/a; type=int+; label=File storage UID
+		fileStorageUid = 1
+		# cat=plugin.tx_fkusermon/others/b; type=int+; label=Category UID of EXT FkuAgenda for sermons
+		agendaSermonCategoryUid = 1
+		# cat=plugin.tx_fkusermon/others/c; type=int+; label=Visibility category UID of EXT FkuAgenda for sermons
+		agendaSermonVisibilityUid = 1
+		# cat=plugin.tx_fkusermon/others/d; type=int+; label=User group ID to create/edit/delete sermons
+		usergroupAdmin = 
+		# cat=plugin.tx_fkusermon/others/e; type=int+; label=User group ID to upload sermon recordings
+		usergroupUpload = 
+		# cat=plugin.tx_fkusermon/others/h; type=string; label=PID of pages which cache to delete after any edit (comma-separated)
+		deleteCachePid = 
+		# cat=plugin.tx_fkusermon/others/n; type=int+; label=Page ID of sermon information
+		PidSermons = 
+	}
+}

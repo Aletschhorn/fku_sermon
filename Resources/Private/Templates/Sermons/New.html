@@ -1,0 +1,34 @@
+
+<f:layout name="Default" />
+
+<f:section name="main">
+<h2>Neue Predigt erfassen</h2>
+
+<f:flashMessages as="flashMessages">
+	<f:render partial="Alert" arguments="{flashMessages:flashMessages}" />
+</f:flashMessages>
+
+<f:render partial="FormErrors" arguments="{object:Sermons}" />
+
+<f:form action="create" enctype="multipart/form-data" name="sermon" object="{sermon}" class="form-horizontal">
+	<f:render partial="Sermons/FormFields" arguments="{sermon:sermon,serials:serials}" />
+	<div class="float-right">
+	    &nbsp;
+        <f:link.action action="list" class="btn btn-outline-dark" id="buttonCancel">Abbrechen</f:link.action>&nbsp;
+        <f:form.submit value="Speichern" class="btn btn-primary" id="buttonSubmit" />&nbsp;
+	</div>
+	<div class="float-right">
+    	<span class="d-none" id="spinner"><f:image src="EXT:fku_planning/Resources/Public/Icons/spinner.gif" /></span>
+	</div>
+</f:form>
+
+<script language="javascript">
+$('#buttonSubmit').click(function() {
+	document.getElementById('buttonSubmit').disabled = true;
+	document.getElementById('buttonCancel').classList.add('disabled');
+	document.getElementById('spinner').className="d-inline";
+	document.sermon.submit();
+});
+</script>
+
+</f:section>

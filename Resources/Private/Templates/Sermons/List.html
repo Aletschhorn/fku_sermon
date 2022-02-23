@@ -1,0 +1,92 @@
+<f:layout name="Default" />
+<f:section name="main">
+
+<f:flashMessages as="flashMessages">
+	<f:render partial="Alert" arguments="{flashMessages:flashMessages}" />
+</f:flashMessages>
+<br />
+
+<f:render partial="Sermons/Notes" />
+<f:form action="list" class="mb-5">
+	<div class="row form-group">
+		<label for="expression" class="col-lg-2 col-md-3 col-4 col-form-label">Such-Begriff</label>
+		<div class="col-lg-4 col-md-6 col-8">
+			<f:form.textfield name="expression" value="{filter.expression}" class="form-control" />	
+		</div>
+	</div>
+	<div class="row form-group">
+		<label for="year" class="col-lg-2 col-md-3 col-4 col-form-label">Jahr</label>
+		<div class="col-lg-4 col-md-6 col-8">
+			<f:form.select name="year" options="{years}" value="{filter.year}" class="form-control" prependOptionLabel="Alle" />
+		</div>
+	</div>
+	<div class="row form-group">
+    	<legend class="col-form-label col-lg-2 col-md-3 col-4 pt-0">Sortierung</legend>
+		<div class="col-lg-4 col-md-6 col-8">
+            <div class="form-check form-check-inline">
+				<f:form.radio name="sorting" id="sorting1" value="1" checked="{filter.sorting}==1" class="form-check-input" />
+                <label class="form-check-label" for="sorting1">nach Datum</label>
+            </div>
+            <div class="form-check form-check-inline">
+				<f:form.radio name="sorting" id="sorting2" value="2" checked="{filter.sorting}==2" class="form-check-input" />
+                <label class="form-check-label" for="sorting2">nach Predigtreihe</label>
+            </div>
+		</div>
+	</div>
+	<f:form.submit value="Suchen" class="btn btn-primary" />
+</f:form>
+
+<f:comment>
+    <div class="float-right mb-3">
+        <f:security.ifHasRole role="{settings.usergroupAdmin}">
+            <f:link.action action="new">
+                <svg class="icon-md" width="32" height="32" fill="currentColor"><use xlink:href="fileadmin/icon/glyphicons-basic-371-plus.svg#glyphicons-basic"/></svg>
+                Neue Predigt hinzufügen
+            </f:link.action>
+        </f:security.ifHasRole>				
+        <f:security.ifHasRole role="{settings.usergroupUpload}">
+            &nbsp; &nbsp;
+            <f:link.action action="new">
+                <svg class="icon-md" width="32" height="32" fill="currentColor"><use xlink:href="fileadmin/icon/glyphicons-basic-371-plus.svg#glyphicons-basic"/></svg>
+                Predigtaufnahme hochladen
+            </f:link.action>
+        </f:security.ifHasRole>				
+    </div>
+</f:comment>
+
+<br />
+
+<f:if condition="{sermons}">
+	<f:then>
+        <table class="table">
+            <tr>
+                <th>Datum</th>
+                <th>Thema</th>
+                <th>Bibelstelle</th>
+                <th>Download</th>
+                <th> </th>
+            </tr>
+        
+            <f:if condition="{filter.sorting}==2">
+                <f:then>
+                    <f:groupedFor each="{sermons}" groupBy="serial.title" groupKey="serialTitle" as="sermonGroup">
+                        <tr class="table-info"><td colspan="5"><b>Predigtreihe: {serialTitle}</b></td></tr>
+                        <f:render partial="Sermons/Table" arguments="{sermons:sermonGroup,filter:filter,settings:settings}" />
+                    </f:groupedFor>
+                </f:then>
+                <f:else>
+                    <f:render partial="Sermons/Table" arguments="{sermons:sermons,filter:filter,settings:settings}" />
+                </f:else>
+            </f:if>
+        
+        </table>
+
+	</f:then>
+    <f:else>
+		<div class="alert alert-info">
+        	<svg class="icon-md" width="32" height="32" fill="currentColor"><use xlink:href="fileadmin/icon/glyphicons-basic-636-circle-info.svg#glyphicons-basic"/></svg>
+            Keine passenden Predigten gefunden.
+        </div>
+    </f:else>
+</f:if>
+</f:section>

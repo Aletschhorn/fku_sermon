@@ -1,0 +1,37 @@
+
+<f:layout name="Default" />
+
+<f:section name="main">
+<h2>Predigt ändern</h2>
+
+<f:flashMessages as="flashMessages">
+	<f:render partial="Alert" arguments="{flashMessages:flashMessages}" />
+</f:flashMessages>
+
+<f:render partial="FormErrors" arguments="{object:Sermons}" />
+
+<f:form action="update" name="sermon" enctype="multipart/form-data" object="{sermon}">
+	<f:render partial="Sermons/FormFields" arguments="{sermon:sermon,serials:serials}" />
+	<div class="text-right">
+    	<span class="d-none" id="spinner"><f:image src="EXT:fku_planning/Resources/Public/Icons/spinner.gif" /></span>
+    	&nbsp;
+        <f:link.action action="delete" arguments="{sermon:sermon}" class="btn btn-danger" additionalAttributes="{onclick: 
+'return confirm(\'Soll diese Predigt wirklich gelöscht werden?\')'}" id="buttonDelete">Predigt löschen</f:link.action>&nbsp;
+        <f:link.action action="show" arguments="{sermon:sermon}" class="btn btn-outline-dark" id="buttonCancel">Abbrechen</f:link.action>&nbsp;
+        <input type="reset" value="Zurücksetzen" class="btn btn-outline-dark" id="buttonReset" />&nbsp;
+        <f:form.submit value="Speichern" class="btn btn-primary" id="buttonSubmit" />
+	</div>
+</f:form>
+
+<script language="javascript">
+$('#buttonSubmit').click(function() {
+	document.getElementById('buttonSubmit').disabled = true;
+	document.getElementById('buttonReset').disabled = true;
+	document.getElementById('buttonCancel').classList.add('disabled');
+	document.getElementById('buttonDelete').classList.add('disabled');
+	document.getElementById('spinner').className="d-inline";
+	document.sermon.submit();
+});
+</script>
+
+</f:section>

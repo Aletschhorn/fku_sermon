@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2014-06-21T15:26:34Z" product-name="fku_sermon">
+		<header/>
+		<body>
+			<trans-unit id="title.description">
+				<source>title</source>
+			</trans-unit>
+			<trans-unit id="recent.description">
+				<source>recent</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

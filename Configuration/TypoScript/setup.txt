@@ -1,0 +1,48 @@
+plugin.tx_fkusermon {
+	view {
+		templateRootPaths.0 = {$plugin.tx_fkusermon.view.templateRootPath}
+		partialRootPaths.0 = {$plugin.tx_fkusermon.view.partialRootPath}
+		layoutRootPaths.0 = {$plugin.tx_fkusermon.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_fkusermon.persistence.storagePid}
+	}
+	features {
+		# uncomment the following line to enable the new Property Mapper.
+		# rewrittenPropertyMapper = 1
+	}
+	settings {
+		storagePid = {$plugin.tx_fkusermon.persistence.storagePid}
+		fileStorageUid = {$plugin.tx_fkusermon.settings.fileStorageUid}
+		agendaSermonCategoryUid = {$plugin.tx_fkusermon.settings.agendaSermonCategoryUid}
+		agendaSermonVisibilityUid = {$plugin.tx_fkusermon.settings.agendaSermonVisibilityUid}
+		usergroupAdmin = {$plugin.tx_fkusermon.settings.usergroupAdmin}
+		usergroupUpload = {$plugin.tx_fkusermon.settings.usergroupUpload}
+		deleteCachePid = {$plugin.tx_fkusermon.settings.deleteCachePid}
+		PidSermons = {$plugin.tx_fkusermon.settings.PidSermons}
+	}
+	parseFunc_RTE_onlyLink {
+		makelinks = 1
+		makelinks.http.keep = path
+		makelinks.http.extTarget = _blank
+	}
+}
+
+config.tx_extbase {
+	persistence {
+		classes {
+			FKU\FkuSermon\Domain\Model\FileReference {
+				mapping {
+					tableName = sys_file_reference
+					columns {
+						uid_local.mapOnProperty = originalFileIdentifier
+					}
+				}
+			}
+		}
+		objects {
+			TYPO3\CMS\Extbase\Domain\Model\FileReference.className = FKU\FkuSermon\Domain\Model\FileReference
+		}
+		updateReferenceIndex = 1
+	}
+}

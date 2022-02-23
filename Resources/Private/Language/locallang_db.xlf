@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2014-06-21T15:26:34Z" product-name="fku_sermon">
+		<header/>
+		<body>
+			<trans-unit id="tx_fkusermon_domain_model_sermons">
+				<source>Sermons</source>
+			</trans-unit>
+			<trans-unit id="tx_fkusermon_domain_model_sermons.date">
+				<source>Date</source>
+			</trans-unit>
+			<trans-unit id="tx_fkusermon_domain_model_sermons.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_fkusermon_domain_model_sermons.preacher">
+				<source>Preacher</source>
+			</trans-unit>
+			<trans-unit id="tx_fkusermon_domain_model_sermons.bible_passage">
+				<source>Bible Passage</source>
+			</trans-unit>
+			<trans-unit id="tx_fkusermon_domain_model_sermons.bible_text">
+				<source>Bible Text</source>
+			</trans-unit>
+			<trans-unit id="tx_fkusermon_domain_model_sermons.concept">
+				<source>Concept</source>
+			</trans-unit>
+			<trans-unit id="tx_fkusermon_domain_model_sermons.related_files">
+				<source>Related Files</source>
+			</trans-unit>
+			<trans-unit id="tx_fkusermon_domain_model_sermons.serial">
+				<source>Serial</source>
+			</trans-unit>
+			<trans-unit id="tx_fkusermon_domain_model_sermons.notpublic">
+				<source>Not public</source>
+			</trans-unit>
+			<trans-unit id="tx_fkusermon_domain_model_serials">
+				<source>Serials</source>
+			</trans-unit>
+			<trans-unit id="tx_fkusermon_domain_model_serials.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_fkusermon_domain_model_serials.recent">
+				<source>Recent</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

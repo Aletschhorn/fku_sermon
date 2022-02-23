@@ -1,0 +1,48 @@
+{namespace ff=FKU\FkuSermon\ViewHelpers}
+
+<f:layout name="Default" />
+<f:section name="main">
+
+<f:flashMessages as="flashMessages">
+	<f:render partial="Alert" arguments="{flashMessages:flashMessages}" />
+</f:flashMessages>
+
+<h2>&quot;{sermon.title}"</h2>
+<p>Predigt vom <f:format.date format="j.n.Y">{sermon.date}</f:format.date><f:if condition="{sermon.serial.title} != 'Diverse'"> aus der Predigtreihe &quot;{sermon.serial.title}&quot;</f:if>, gehalten von {sermon.preacher}.</p>
+
+<f:if condition="{sermon.notpublic}">
+	<div class="alert alert-info">Diese Predigt ist versteckt.</div>
+</f:if>
+
+<f:if condition="{sermon.biblePassage}">
+	<h3>Bibeltext: {sermon.biblePassage}</h3>
+	<p><f:format.nl2br>{sermon.bibleText}</f:format.nl2br></p>
+</f:if>
+
+<f:if condition="{sermon.concept}">
+	<h3>Konzept</h3>
+	<p><f:format.nl2br><f:format.html parseFuncTSPath="plugin.tx_fkusermon.parseFunc_RTE_onlyLink">{sermon.concept}</f:format.html></f:format.nl2br></p>
+</f:if>
+
+<f:if condition="{sermon.relatedFiles}">
+	<h3>Download</h3>
+	<p class="text-uppercase">
+		<f:for each="{sermon.relatedFiles}" as="file">
+			<a href="{file.originalResource.publicUrl}" target="_blank">
+				<svg class="icon-md" width="32" height="32" fill="currentColor"><use xlink:href="fileadmin/icon/{file.originalResource.originalFile.properties.mime_type->ff:fileIcon()}.svg#glyphicons-basic"/></svg>
+				{file.originalResource.originalFile.properties.extension}
+			</a>
+			<br />
+		</f:for>
+	</p>
+</f:if>
+<br />
+
+<p>
+	<f:link.action action="{list}" arguments="{expression:expression,year:year,sorting:sorting}" class="btn btn-outline-dark">Zurück zur Liste</f:link.action>
+	<f:security.ifHasRole role="{settings.usergroupAdmin}">
+		&nbsp;<f:link.action action="edit" arguments="{sermon:sermon}" class="btn btn-outline-dark">Predigt ändern</f:link.action>
+	</f:security.ifHasRole>
+</p>
+
+</f:section>

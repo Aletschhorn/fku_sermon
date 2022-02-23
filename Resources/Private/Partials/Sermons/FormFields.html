@@ -1,0 +1,109 @@
+<div class="row">
+	<div class="col-md-6 col-12">
+
+		<div class="row form-group">
+			<label for="date" class="col-md-4 col-form-label">Datum</label>
+			<div class="col-md-8">
+				<f:form.textfield property="date" name="date" value="{sermon.date->f:format.date(format:'d.m.Y')}" class="form-control" errorClass="has-error" placeholder="TT.MM.JJJJ" />
+			</div>
+		</div>
+
+	</div>
+	<div class="col-md-6 col-12">
+
+		<div class="row form-group">
+			<label for="preacher" class="col-md-4 col-form-label">Prediger</label>
+			<div class="col-md-8">
+				<f:form.textfield property="preacher" class="form-control" />
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-12">
+		<div class="row form-group">
+			<label for="serial" class="col-md-4 col-form-label">Predigtreihe</label>
+			<div class="col-md-8">
+				<f:form.select property="serial" options="{serials}" optionLabelField="title" class="form-control" />
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-12">
+		<div class="row form-group">
+			<label for="title" class="col-md-4 col-form-label">Predigtthema</label>
+			<div class="col-md-8">
+				<f:form.textfield property="title" class="form-control" />
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6 col-12">
+		<div class="row form-group">
+			<label for="biblePassage" class="col-md-4 col-form-label">Bibelstelle</label>
+			<div class="col-md-8">
+				<f:form.textfield property="biblePassage" class="form-control" />
+			</div>
+		</div>
+	</div>
+</div>
+	
+<f:security.ifHasRole role="{settings.usergroupAdmin}">
+	<div class="row form-group">
+		<label for="bibleText" class="col-md-2 col-form-label">Bibeltext</label>
+		<div class="col-md-10">
+			<f:form.textarea property="bibleText" rows="6" class="form-control" />
+		</div>
+	</div>
+	
+	<div class="row form-group">
+		<label for="concept" class="col-md-2 col-form-label">Konzept</label>
+		<div class="col-md-10">
+			<f:form.textarea property="concept" rows="6" class="form-control" />
+		</div>
+	</div>
+</f:security.ifHasRole>
+	
+<div class="row form-group">
+	<label for="relatedFiles" class="col-md-2 col-form-label">Downloads</label>
+	<div class="col-md-10">
+    	<div class="custom-file mb-3">
+            <f:form.upload name="newDocument" class="custom-file-input" id="newDocument1" />
+            <label class="custom-file-label" for="newDocument1">Neue Datei auswählen</label>
+        </div>
+		<f:if condition="{sermon.relatedFiles}">
+			<div class="form-control-static">Bestehende Dateien:</div>
+			<ul>
+				<f:for each="{sermon.relatedFiles}" as="file">
+					<li>
+                    	<a href="{file.originalResource.publicUrl}" target="_blank">{file.originalResource.originalFile.name}</a> &nbsp;  
+                        <span title="Datei zum Löschen markieren">
+                        	<f:form.checkbox name="delDocument[{file.uid}]" value="1" />
+                            <svg class="icon-md" width="32" height="32" fill="currentColor"><use xlink:href="fileadmin/icon/glyphicons-basic-17-bin.svg#glyphicons-basic"/></svg>
+                        </span>
+                    </li>
+				</f:for>
+			</ul>
+		</f:if>
+	</div>
+</div>
+
+<f:security.ifHasRole role="{settings.usergroupAdmin}">
+	<f:then>
+		<div class="row form-group">
+        	<legend class="col-form-label col-2 float-left pt-0">Verstecken</legend>
+			<div class="col-10">
+                <div class="form-check">
+                    <f:form.checkbox property="notpublic" value="1" class="form-check-input" />
+	                <label class="form-check-label" for="notpublic">Predigt ist verborgen</label>
+                </div>
+			</div>
+		</div>
+	</f:then>
+	<f:else>
+		<f:form.hidden property="notpublic" value="1" />
+	</f:else>
+</f:security.ifHasRole>
