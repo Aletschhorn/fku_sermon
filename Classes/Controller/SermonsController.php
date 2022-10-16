@@ -1,39 +1,11 @@
 <?php
 namespace FKU\FkuSermon\Controller;
 
-/***************************************************************
- *
- *  Copyright notice
- *
- *  (c) 2014 Daniel Widmer <daniel.widmer@fku.ch>
- *
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
-
-/**
- * SermonsController
- */
-
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use FKU\FkuSermon\Domain\Repository\SermonsRepository;
 use FKU\FkuSermon\Domain\Repository\SerialsRepository;
 use FKU\FkuSermon\Domain\Repository\FileReferenceRepository;
+use FKU\FkuSermon\Domain\Model\Sermons;
 use FKU\FkuAgenda\Domain\Repository\EventRepository;
 use FKU\FkuPeople\Domain\Repository\NotificationRepository;
 use FKU\FkuPeople\Command\NotificationCommand;
@@ -41,46 +13,16 @@ use FKU\FkuPeople\Command\NotificationCommand;
 
 class SermonsController extends ActionController {
 
-	/**
-	 * sermonsRepository
-	 *
-	 * @var SermonsRepository
-	 */
 	protected $sermonsRepository;
 
-	/**
-	 * serialsRepository
-	 *
-	 * @var SerialsRepository
-	 */
 	protected $serialsRepository;
 
-	/**
-	 * fileReferenceRepository
-	 *
-	 * @var FileReferenceRepository
-	 */
 	protected $fileReferenceRepository;
 
-	/**
-	 * eventRepository
-	 *
-	 * @var EventRepository
-	 */
 	protected $eventRepository;
 
-	/**
-	 * notificationRepository
-	 *
-	 * @var NotificationRepository
-	 */
 	protected $notificationRepository;
 
-	/**
-	 * notificationCommand
-	 *
-	 * @var NotificationCommand
-	 */
 	protected $notificationCommand;
     
 	/**
@@ -167,10 +109,9 @@ class SermonsController extends ActionController {
 	/**
 	 * action show
 	 *
-	 * @param \FKU\FkuSermon\Domain\Model\Sermons $sermon
 	 * @return void
 	 */
-	public function showAction(\FKU\FkuSermon\Domain\Model\Sermons $sermon) {
+	public function showAction(Sermons $sermon) {
 		if ($this->request->hasArgument('expression')) { 
 			$expression = trim($this->request->getArgument('expression')); 
 		} else { 
@@ -211,11 +152,10 @@ class SermonsController extends ActionController {
 	/**
 	 * action new
 	 *
-	 * @param \FKU\FkuSermon\Domain\Model\Sermons $sermon
 	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("sermon")
 	 * @return void
 	 */
-	public function newAction(\FKU\FkuSermon\Domain\Model\Sermons $sermon = NULL) {
+	public function newAction(Sermons $sermon = NULL) {
 		$sermon = new \FKU\FkuSermon\Domain\Model\Sermons;
 		$sermon->setNotpublic(1);
 		$last = $this->eventRepository->findLast(1, array($this->settings['agendaSermonVisibilityUid']), 0, array($this->settings['agendaSermonCategoryUid']),1);
@@ -251,10 +191,9 @@ class SermonsController extends ActionController {
 	/**
 	 * action create
 	 *
-	 * @param \FKU\FkuSermon\Domain\Model\Sermons $sermon
 	 * @return void
 	 */
-	public function createAction(\FKU\FkuSermon\Domain\Model\Sermons $sermon) {
+	public function createAction(Sermons $sermon) {
 		
 		if ($sermon->getTitle() == '') {
 			$sermon->setTitle('(kein Titel)');
@@ -280,10 +219,6 @@ class SermonsController extends ActionController {
 
 		// write to database
 		$this->sermonsRepository->add($sermon);
-		
-		if ($this->settings['deleteCachePid']) {
-			$this->clearSpecificCache($this->settings['deleteCachePid']);
-		}
 		$this->addFlashMessage('Die Predigt-Angaben wurden gespeichert.','',\TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
 		
 		// Generate notifications as per user-specific rules
@@ -297,11 +232,10 @@ class SermonsController extends ActionController {
 	/**
 	 * action edit
 	 *
-	 * @param \FKU\FkuSermon\Domain\Model\Sermons $sermon
 	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("sermon")
 	 * @return void
 	 */
-	public function editAction(\FKU\FkuSermon\Domain\Model\Sermons $sermon) {
+	public function editAction(Sermons $sermon) {
 		$serials = $this->serialsRepository->findAll();
 		$this->view->assign('sermon', $sermon);
 		$this->view->assign('serials', $serials);
@@ -321,10 +255,9 @@ class SermonsController extends ActionController {
 	/**
 	 * action update
 	 *
-	 * @param \FKU\FkuSermon\Domain\Model\Sermons $sermon
 	 * @return void
 	 */
-	public function updateAction(\FKU\FkuSermon\Domain\Model\Sermons $sermon) {
+	public function updateAction(Sermons $sermon) {
 
 		// upload and assign new file
 		$storageRepository =  new \TYPO3\CMS\Core\Resource\StorageRepository;
@@ -365,10 +298,6 @@ class SermonsController extends ActionController {
 		}
 
 		$this->sermonsRepository->update($sermon);
-
-		if ($this->settings['deleteCachePid']) {
-			$this->clearSpecificCache($this->settings['deleteCachePid']);
-		}
 		$this->addFlashMessage('Die Predigt-Angaben wurden gespeichert.','',\TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
 		
 		// Generate notifications as per user-specific rules
@@ -382,37 +311,20 @@ class SermonsController extends ActionController {
 	/**
 	 * action delete
 	 *
-	 * @param \FKU\FkuSermon\Domain\Model\Sermons $sermon
 	 * @return void
 	 */
-	public function deleteAction(\FKU\FkuSermon\Domain\Model\Sermons $sermon) {
+	public function deleteAction(Sermons $sermon) {
 		$this->sermonsRepository->remove($sermon);
-		if ($this->settings['deleteCachePid']) {
-			$this->clearSpecificCache($this->settings['deleteCachePid']);
-		}
-
 		$this->addFlashMessage('Die Predigt wurde gelöscht.','',\TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
 		$this->redirect('list');
 	}
 
 	/**
-	* clearSpecificCache
-	*
-	* @param \string $pid Comma-separated list of PIDs
-	* @return void
-	*/
-    protected function clearSpecificCache($pid) {
-		$pageIds = explode(',',$pid);
-		$this->cacheService->clearPageCache($pageIds);
-    }
-
-	/**
 	* generateNotifications
 	*
-	 * @param \FKU\FkuSermon\Domain\Model\Sermons $sermon
 	* @return void
 	*/
-    protected function generateNotifications(\FKU\FkuSermon\Domain\Model\Sermons $sermon) {	
+    protected function generateNotifications(Sermons $sermon) {	
 		$notifications = $this->notificationRepository->findAllOfExtension('fku_sermon');
 		if ($notifications->count() > 0) {
 			$notifText[0] = sprintf($notifications->getFirst()->getRule()->getMessage(), $sermon->getDate()->format('d.m.y'));
