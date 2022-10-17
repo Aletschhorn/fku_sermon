@@ -1,30 +1,20 @@
 <?php
+use FKU\FkuSermon\Controller\SermonsController;
+
 defined('TYPO3_MODE') or die();
 
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	'FKU.fku_sermon',
-	'Sermons',
-	array(
-		'Sermons' => 'list, listSerial, show, new, create, edit, update, delete',
-		
-	),
-	// non-cacheable actions
-	array(
-		'Sermons' => 'list, create, update, delete',
-		
-	)
-);
-
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	'FKU.fku_sermon',
-	'Serials',
-	array(
-		'Serials' => 'list, show, new, create, edit, update, delete',
-		
-	),
-	// non-cacheable actions
-	array(
-		'Serials' => 'create, update, delete',
-		
-	)
-);
+(static function() {
+	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+		'FkuSermon',
+		'List',
+		[SermonsController::class => 'list, show, new, create, edit, update, delete'],
+		[SermonsController::class => 'new, create, edit, update, delete']
+	);
+	
+	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+		'FkuSermon',
+		'Last',
+		[SermonsController::class => 'last'],
+		[]
+	);
+})();
