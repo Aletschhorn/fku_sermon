@@ -22,7 +22,7 @@ $EM_CONF[$_EXTKEY] = [
 	'uploadfolder' => '0',
 	'createDirs' => '',
 	'clearCacheOnLoad' => 0,
-	'version' => '3.1.0',
+	'version' => '3.2.0',
 	'constraints' => [
 		'depends' => [
 			'typo3' => '7.6.0 - 10.4.99',
@@ -110,6 +110,12 @@ $EM_CONF[$_EXTKEY] = [
  * Added partial Sermon/Notes and use it in template List
  * Commented out the links for adding new sermons in template List
  * Modified setup.txt with template paths (instead of path)
+ *
+ * Version 3.2.0
+ * -------------                    
+ * Removed clearing of cache in controller
+ * Newly defined plugins instead of swtichable controller action in flexform
+ * Renaming extension of typoscript files 
  *
  *
 **/
