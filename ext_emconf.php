@@ -22,7 +22,7 @@ $EM_CONF[$_EXTKEY] = [
 	'uploadfolder' => '0',
 	'createDirs' => '',
 	'clearCacheOnLoad' => 0,
-	'version' => '3.2.0',
+	'version' => '3.2.1',
 	'constraints' => [
 		'depends' => [
 			'typo3' => '7.6.0 - 10.4.99',
@@ -117,5 +117,8 @@ $EM_CONF[$_EXTKEY] = [
  * Newly defined plugins instead of swtichable controller action in flexform
  * Renaming extension of typoscript files 
  *
+ * Version 3.2.1
+ * -------------                    
+ * Declared list view to be not cached in ext_emconf.php
  *
 **/
