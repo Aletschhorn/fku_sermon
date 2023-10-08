@@ -8,7 +8,7 @@ defined('TYPO3_MODE') or die();
 		'FkuSermon',
 		'List',
 		[SermonsController::class => 'list, show, new, create, edit, update, delete'],
-		[SermonsController::class => 'new, create, edit, update, delete']
+		[SermonsController::class => 'list, new, create, edit, update, delete']
 	);
 	
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
